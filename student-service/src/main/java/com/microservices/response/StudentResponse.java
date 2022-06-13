@@ -12,8 +12,18 @@ public class StudentResponse {
 	private String lastName;
 	
 	private String email;	
+	
+	private AddressResponse addressResponse;
 
 	
+	public AddressResponse getAddressResponse() {
+		return addressResponse;
+	}
+
+	public void setAddressResponse(AddressResponse addressResponse) {
+		this.addressResponse = addressResponse;
+	}
+
 	public long getId() {
 		return id;
 	}

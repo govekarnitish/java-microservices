@@ -7,7 +7,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.microservices.entity.Student;
 import com.microservices.repository.StudentRepository;
 import com.microservices.request.CreateStudentRequest;
+import com.microservices.response.AddressResponse;
 import com.microservices.response.StudentResponse;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class StudentService {
@@ -33,10 +36,18 @@ public class StudentService {
 	}
 
 	public StudentResponse getById(long id) {
-		
 		Student student = studentRepository.findById(id).get();
 		
-		return new StudentResponse(student);
+		StudentResponse studentResponse = new StudentResponse(student);
+		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+		
+		return studentResponse;
+	}
+	
+	public AddressResponse getAddressById(long addressId) {
+		Mono<AddressResponse> addressResponse = webClient.get().uri("/getById/"+ addressId).retrieve().bodyToMono(AddressResponse.class);
+		
+		return addressResponse.block();
 	}
 
 }
