@@ -2,6 +2,7 @@ package com.microservices.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.microservices.entity.Student;
 import com.microservices.repository.StudentRepository;
@@ -13,6 +14,9 @@ public class StudentService {
 	
 	@Autowired
 	StudentRepository studentRepository;
+	
+	@Autowired
+	WebClient webClient;
 	
 
 	public StudentResponse createStudent(CreateStudentRequest request) {
