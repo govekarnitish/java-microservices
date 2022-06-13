@@ -14,7 +14,7 @@ import com.microservices.service.AddressService;
 
 @RestController
 @RequestMapping("/api/address")
-public class AddresscController {
+public class AddressController {
 	
 	@Autowired
 	AddressService addressService;
