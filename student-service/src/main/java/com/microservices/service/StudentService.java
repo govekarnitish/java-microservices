@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.microservices.entity.Student;
+import com.microservices.feignclients.AddressFeignClient;
 import com.microservices.repository.StudentRepository;
 import com.microservices.request.CreateStudentRequest;
 import com.microservices.response.AddressResponse;
@@ -21,6 +22,8 @@ public class StudentService {
 	@Autowired
 	WebClient webClient;
 	
+	@Autowired
+	AddressFeignClient addressFeignClient;
 
 	public StudentResponse createStudent(CreateStudentRequest request) {
 		
@@ -39,8 +42,9 @@ public class StudentService {
 		Student student = studentRepository.findById(id).get();
 		
 		StudentResponse studentResponse = new StudentResponse(student);
-		studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
+		//studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
 		
+		studentResponse.setAddressResponse(addressFeignClient.getById(student.getAddressId()));
 		return studentResponse;
 	}
 	
